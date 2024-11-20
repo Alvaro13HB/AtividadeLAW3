@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+    {% set mensagens = get_flashed_messages() %}
+    {% if mensagens %}
+        {% for msg in mensagens %}
+            <div>
+                {{msg}}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <fieldset>
+        <form action="/turmas/edit-save" method="post">
+            <div>
+                <label for="nome_disc">Disciplina: </label>
+                <input type="text" name="nome_disc" id="nome_disc">
+            </div>
+            <div>
+                <label for="semestre">Semestre: </label>
+                <input type="text" name="semestre" id="semestre">
+            </div>
+            <div>
+                <label for="professor">Professor: </label>
+                <select name="id_professor" id="professor">
+                    <option value=""></option>
+                    {% for p in professores %}
+                    <option value="{{p.id}}">{{p.nome}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="hidden" name="id" id="id" value="{{dados.id}}">
+            <button type="submit">Salvar</button>
+        </form>
+    </fieldset>
+
+{% endblock %}

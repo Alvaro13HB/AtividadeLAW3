@@ -6,21 +6,25 @@ bp_turmas = Blueprint('turmas', __name__, template_folder="templates")
 
 @bp_turmas.route("/")
 def index():
-    t = Turma.query_all()
+    t = Turma.query.all()
     return render_template("turmas.html", dados=t)
 
 
 @bp_turmas.route("/add")
 def add():
-    p = Professor.query_all()
-    return render_template("turmas_add.html", professores=p)
+    t = Turma.query.all()
+    p = Professor.query.all()
+    return render_template("turmas_add.html", dados=t, professores=p)
 
 
-@bp_turmas.route("/save")
+@bp_turmas.route("/save", methods=['POST'])
 def save():
     nome_disc = request.form.get("nome_disc")
     semestre = request.form.get("semestre")
     id_professor = request.form.get("id_professor")
+
+    professor = Professor.query.all()
+
     if nome_disc and semestre and id_professor:
         db_turma = Turma(nome_disc, semestre, id_professor)
         db.session.add(db_turma)
@@ -33,7 +37,7 @@ def save():
     
 
 @bp_turmas.route("/remove/<int:id>")
-def remove():
+def remove(id):
     t = Turma.query.get(id)
     try:
         db.session.delete(t)
@@ -45,9 +49,10 @@ def remove():
 
 
 @bp_turmas.route("/edit/<int:id>")
-def edit():
+def edit(id):
     t = Turma.query.get(id)
-    return render_template("turmas_edit.html", dados=t)
+    p = Professor.query.all()
+    return render_template("turmas_edit.html", dados=t, professores=p)
 
 
 @bp_turmas.route("/edit-save", methods=['POST'])

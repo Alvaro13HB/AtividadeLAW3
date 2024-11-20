@@ -55,6 +55,12 @@ table, td, th, tr {
     padding: 1rem;
 }
 
+td a {
+    text-decoration: none;
+    color: black;
+    font-weight: 800;
+}
+
 fieldset {
     border-radius: 5px;
     background-color: rebeccapurple;

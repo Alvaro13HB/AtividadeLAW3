@@ -18,11 +18,15 @@
         <tr>
             <th>Nome</th>
             <th>Departamento</th>
+            <th>Editar</th>
+            <th>Remover</th>
         </tr>
         {% for professor in dados %}
         <tr>
             <td>{{professor.nome}}</td>
             <td>{{professor.dpto}}</td>
+            <td><a href="/professores/edit/{{professor.id}}">[✎]</a></td>
+            <td><a href="/professores/remove/{{professor.id}}">[X]</a></td>
         </tr>
         {% endfor %}
     </table>

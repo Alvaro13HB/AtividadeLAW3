@@ -6,7 +6,7 @@ bp_professores = Blueprint('professores', __name__, template_folder="templates")
 
 @bp_professores.route("/")
 def index():
-    p = Professor.query_all()
+    p = Professor.query.all()
     return render_template("professores.html", dados=p)
 
 
@@ -15,7 +15,7 @@ def add():
     return render_template("professores_add.html")
 
 
-@bp_professores.route("/save")
+@bp_professores.route("/save", methods=['POST'])
 def save():
     nome = request.form.get("nome")
     dpto = request.form.get("dpto")
@@ -31,7 +31,7 @@ def save():
     
 
 @bp_professores.route("/remove/<int:id>")
-def remove():
+def remove(id):
     p = Professor.query.get(id)
     try:
         db.session.delete(p)
@@ -43,7 +43,7 @@ def remove():
 
 
 @bp_professores.route("/edit/<int:id>")
-def edit():
+def edit(id):
     p = Professor.query.get(id)
     return render_template("professores_edit.html", dados=p)
 
